@@ -14,5 +14,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('pages.welcome');
+})->name('welcome');
+
+Route::get('login', function () {
+    return view('pages.login');
+})->name('login');
+
+Route::get('checkout', function () {
+    return view('pages.checkout');
+})->name('checkout');
+
+Route::get('success-checkout', function () {
+    return view('pages.success_checkout');
+})->name('success-checkout');
