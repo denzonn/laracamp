@@ -29,9 +29,6 @@ Route::middleware(['auth'])->group(function () {
     // User Dashboard
     Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
-    // Invoice email
-    Route::get('dashboard/checkout/invoice/{checkout}', [CheckoutController::class, 'invoice'])->name('user.checkout.invoice');
-
     // Checkout routes
     Route::get('checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
     Route::get('checkout/{camp:slug}', [CheckoutController::class, 'create'])->name('checkout.create');
