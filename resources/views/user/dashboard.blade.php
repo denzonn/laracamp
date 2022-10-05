@@ -52,6 +52,7 @@
                         <tr>
                             <td colspan='5'>
                                 <h1>No Data</h1>
+                                <hr>
                             </td>
                         </tr>
                     @endforelse
