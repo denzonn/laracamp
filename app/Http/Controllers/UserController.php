@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\User\AfterRegister;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
 
 class UserController extends Controller
@@ -30,7 +32,14 @@ class UserController extends Controller
         ];
 
         // Jika sudah ada data maka tidak usah di buat baru (firstorcreate)
-        $user = User::firstOrCreate(['email' => $data['email'] ], $data);
+        // $user = User::firstOrCreate(['email' => $data['email'] ], $data);
+
+        // Cara lain untuk email confirmation
+        $user = User::where('email', $data['email'])->first();
+        if(!$user) {
+            $user = User::create($data);
+            Mail::to($user->email)->send(new AfterRegister($user));
+        }
 
         Auth::login($user, true);
 
