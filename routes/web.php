@@ -32,6 +32,11 @@ Route::get('auth/google/callback', [
     'handleProviderCallback',
 ])->name('user.google.callback');
 
+
+//Midtrans route
+Route::get('payment/success', [CheckoutController::class, 'midtransCallback']);
+Route::post('payment/success', [CheckoutController::class, 'midtransCallback']);
+
 Route::middleware(['auth'])->group(function () {
     // Dashboard
     Route::get('dashboard', [HomeController::class, 'dashboard'])->name(
@@ -76,10 +81,6 @@ Route::middleware(['auth'])->group(function () {
         'checkout.store'
     )->middleware('ensureUserRole:user');
 
-
-    //Midtrans route
-    Route::get('payment/success', [UserController::class, 'midtransCallback']);
-    Route::post('payment/success', [UserController::class, 'midtransCallback']);
 });
 
 require __DIR__ . '/auth.php';
