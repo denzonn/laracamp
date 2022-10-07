@@ -75,6 +75,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('checkout/{camp}', [CheckoutController::class, 'store'])->name(
         'checkout.store'
     )->middleware('ensureUserRole:user');
+
+
+    //Midtrans route
+    Route::get('payment/success', [UserController::class, 'midtransCallback']);
+    Route::post('payment/success', [UserController::class, 'midtransCallback']);
 });
 
 require __DIR__ . '/auth.php';
