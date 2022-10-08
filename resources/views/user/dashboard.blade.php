@@ -38,6 +38,8 @@
                             <td>
                                 @if($checkout->payment_status == 'paid')
                                     <strong class="text-green">Payment Success</strong>
+                                @elseif ($checkout->payment_status == 'failed')
+                                    <strong class="text-red">Failed</strong>
                                 @else
                                     <strong class="text-red">Waiting for Payment</strong>
                                 @endif

@@ -41,14 +41,14 @@ class CheckoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Camps $camp, Request $request)
+    public function create(Camps $camp, Request $request, Checkout $checkout)
     {
         if ($camp->isRegistered){
             $request->session()->flash('error', "You have already registered on {$camp->title} camp");
             return redirect()->route('user.dashboard');
         }
-
-        return view('checkout.create', [
+        
+        return view('checkout.create', [ 
             'camp' => $camp
         ]);
     }
@@ -85,7 +85,7 @@ class CheckoutController extends Controller
         // Send Email
         Mail::to(Auth::user()->email)->send(new AfterCheckout($checkout));
 
-        return redirect(route('checkout.success'));
+        return redirect()->away($checkout->midtrans_url);
     }
     /**
      * Display the specified resource.
