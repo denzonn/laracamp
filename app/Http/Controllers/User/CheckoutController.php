@@ -7,6 +7,7 @@ use App\Http\Requests\User\Checkout\Store;
 use App\Mail\Checkout\AfterCheckout;
 use App\Models\Camps;
 use App\Models\Checkout;
+use App\Models\Discount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -75,6 +76,15 @@ class CheckoutController extends Controller
         $user->phone = $data['phone'];
         $user->address = $data['address'];
         $user->save();
+
+        //Check if discount code is valid
+        // Dicek apa idnya dan percentage
+        if($request->discount){
+            $discount = Discount::whereCode($request->discount)->first();
+            $data['discount_id'] = $discount->id;
+            $data['discount_percentage'] = $discount->percentage;
+
+        }
 
         // create checkout
         $checkout = Checkout::create($data);
@@ -153,16 +163,32 @@ class CheckoutController extends Controller
 
         $checkout->midtrans_booking_code = $orderId;
 
-        $transactionDetails = [
-            'order_id' => $orderId,
-            'gross_amount' => $price
-        ];
-
         $itemDetails[] = [
             'id' => $orderId,
             'price' => $price,
             'quantity' => 1,
             'name' => "Payment for {$checkout->Camp->title} Camp"
+        ];
+
+        $discountPrice = 0;
+        if($checkout->Discount){
+
+            //Discount
+            $discountPrice = $price * $checkout->Discount->percentage / 100;
+
+            $itemDetails[] = [
+                'id' => $checkout->Discount->code,
+                'price' => -$discountPrice,
+                'quantity' => 1,
+                'name' => "Discount {$checkout->Discount->name} ({$checkout->Discount->percentage}%)"
+            ];
+        }
+
+        $total = $price - $discountPrice;
+
+        $transactionDetails = [
+            'order_id' => $orderId,
+            'gross_amount' => $total
         ];
 
         $customerDetails = [
@@ -184,6 +210,7 @@ class CheckoutController extends Controller
             // Get Snap Payment Page URL
             $paymentUrl = \Midtrans\Snap::createTransaction($midtransParams)->redirect_url;
             $checkout->midtrans_url = $paymentUrl;
+            $checkout->total=$total;
             $checkout->save();
 
             // Redirect to Snap Payment Page

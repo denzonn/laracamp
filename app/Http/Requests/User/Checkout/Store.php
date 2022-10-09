@@ -24,14 +24,14 @@ class Store extends FormRequest
      */
     public function rules()
     {
-        $expiredValidation = date('Y-m', time());
-
         return [
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email,' . Auth::id() . ',id',
             'occupation' => 'required|string',
             'phone' => 'required|numeric',
             'address' => 'required|string',
+            // Jadi discount akan mengecek ke table discount dengan field code
+            'discount' => 'nullable|string|exists:discounts,code,deleted_at,NULL',
         ];
     }
 }
