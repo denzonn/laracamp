@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\DashboardController as UserDashboard;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\DiscountController as AdminDiscount;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +55,6 @@ Route::middleware(['auth'])->group(function () {
 
     // Admin Dashboard
     Route::prefix('admin/dashboard')
-    ->namespace('Admin')
     ->name('admin.')
     ->middleware('ensureUserRole:admin')
     ->group(function () {
@@ -62,6 +62,9 @@ Route::middleware(['auth'])->group(function () {
 
         //Admin Checkout Paid
         Route::post('checkout/{checkout}', [AdminCheckout::class, 'update'])->name('checkout.update');
+
+        // Admin Discount 
+        Route::resource('discount', AdminDiscount::class);
     });
 
     

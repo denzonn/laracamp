@@ -33,37 +33,45 @@
                             @csrf
                             <div class="mb-4">
                                 <label class="form-label">Full Name</label>
-                                <input name="name" type="text" class="form-control {{ $errors->has('name') ?  'is-invalid' : '' }}" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ Auth::user()->name }}" required>
+                                <input name="name" type="text" class="form-control {{ $errors->has('name') ?  'is-invalid' : '' }}" id="name" value="{{ Auth::user()->name }}" required>
                                 @if($errors->has('name'))
                                     <p class="text-danger">{{ $errors->first('name') }}</p>
                                 @endif
                             </div>
                             <div class="mb-4">
                                 <label class="form-label">Email Address</label>
-                                <input name="email" type="email" class="form-control {{ $errors->has('email') ?  'is-invalid' : '' }}" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ Auth::user()->email }}" value="{{ Auth::user()->email }}" required>
+                                <input name="email" type="email" class="form-control {{ $errors->has('email') ?  'is-invalid' : '' }}" id="email" value="{{ Auth::user()->email }}" value="{{ Auth::user()->email }}" required>
                                 @if($errors->has('email'))
                                     <p class="text-danger">{{ $errors->first('email') }}</p>
                                 @endif
                             </div>
                             <div class="mb-4">
                                 <label class="form-label">Occupation</label>
-                                <input name="occupation" type="text" class="form-control {{ $errors->has('occupation') ?  'is-invalid' : '' }}" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ Auth::user()->occupation }}" value="{{ old('occupation') ?: Auth::user()->occupation }}" required>
+                                <input name="occupation" type="text" class="form-control {{ $errors->has('occupation') ?  'is-invalid' : '' }}" id="occupation" value="{{ Auth::user()->occupation }}" value="{{ old('occupation') ?: Auth::user()->occupation }}" required>
                                 @if($errors->has('occupation'))
                                     <p class="text-danger">{{ $errors->first('occupation') }}</p>
                                 @endif
                             </div>
                             <div class="mb-4">
                                 <label class="form-label">Phone</label>
-                                <input name="phone" type="text" class="form-control {{ $errors->has('phone') ?  'is-invalid' : '' }}" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ Auth::user()->phone }}" value="{{ old('phone') ?: Auth::user()->phone }}" required>
+                                <input name="phone" type="text" class="form-control {{ $errors->has('phone') ?  'is-invalid' : '' }}" id="phone" value="{{ Auth::user()->phone }}" value="{{ old('phone') ?: Auth::user()->phone }}" required>
                                 @if($errors->has('phone'))
                                     <p class="text-danger">{{ $errors->first('phone') }}</p>
                                 @endif
                             </div>
                             <div class="mb-4">
                                 <label class="form-label">Address</label>
-                                <input name="address" type="text" class="form-control {{ $errors->has('address') ?  'is-invalid' : '' }}" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ Auth::user()->address }}" value="{{ old('address') ?: Auth::user()->address }}" required>
+                                <input name="address" type="text" class="form-control {{ $errors->has('address') ?  'is-invalid' : '' }}" id="address" value="{{ Auth::user()->address }}" value="{{ old('address') ?: Auth::user()->address }}" required>
                                 @if($errors->has('address'))
                                     <p class="text-danger">{{ $errors->first('address') }}</p>
+                                @endif
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Discount Code</label>
+                                <input name="discount" type="text" class="form-control {{ $errors->has('discount') ?  'is-invalid' : '' }}" id="discount" value="{{ old('discount') }}" >
+                                @if($errors->has('discount'))
+                                    <p class="text-danger">{{ $errors->first('discount') }}</p>
                                 @endif
                             </div>
                             

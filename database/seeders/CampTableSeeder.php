@@ -19,7 +19,7 @@ class CampTableSeeder extends Seeder
             [
                 'title' => 'Gila Belajar',
                 'slug' =>   'gila-belajar',
-                'price' =>  1000,
+                'price' =>  280,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
